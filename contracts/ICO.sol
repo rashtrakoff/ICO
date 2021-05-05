@@ -99,7 +99,6 @@ contract ICO is Pausable
 
         else
         {
-            // uint256 ethAmountLeft = msg.value.sub(token.balanceOf(address(this)).div(TOKEN_RATE));
             tokenAmount = token.balanceOf(address(this));
             uint256 ethAmountLeft = (msg.value).sub(tokenAmount.mul(TOKEN_RATE).div(1e10).div(ethUSDRate));
             beneficiary.transfer(msg.value.sub(ethAmountLeft));

@@ -8,8 +8,8 @@ contract Whitelist is Ownable
     mapping(address => bool) public whitelisted;
 
 
-    event AddedToWhitelist(address indexed _recipient);
-    event RemovedFromWhitelist(address indexed _recipient);
+    event AddedToWhitelist(address indexed _recipient, uint256 timestamp);
+    event RemovedFromWhitelist(address indexed _recipient, uint256 timestamp);
 
 
     function addAddress(address _recipient) external onlyOwner
@@ -18,7 +18,7 @@ contract Whitelist is Ownable
 
         whitelisted[_recipient] = true;
 
-        emit AddedToWhitelist(_recipient);
+        emit AddedToWhitelist(_recipient, block.timestamp);
     }
 
     function removeAddress(address _recipient) external onlyOwner
@@ -27,6 +27,6 @@ contract Whitelist is Ownable
 
         whitelisted[_recipient] = false;
 
-        emit RemovedFromWhitelist(_recipient);
+        emit RemovedFromWhitelist(_recipient, block.timestamp);
     }
 }

@@ -1,7 +1,13 @@
 {
+  "scripts": {
+    "test:ganache": "concurrently \"ganache-cli>/dev/null\" \"truffle test --debug --network development && npm run kill\"",
+    "kill": "kill $(lsof -t -i:8545)"
+  },
   "dependencies": {
     "@chainlink/contracts": "^0.1.7",
     "@openzeppelin/contracts": "^3.4.1",
+    "concurrently": "^6.0.2",
+    "ganache-cli": "^6.12.2",
     "truffle-assertions": "^0.9.2"
   }
 }
