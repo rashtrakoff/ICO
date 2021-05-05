@@ -35,7 +35,7 @@ module.exports = async function(deployer, network, accounts) {
         tokenInstance.address, 
         whitelistInstance.address, 
         accounts[1], 
-        3000, 
+        '10000000000000000', 
         { from: accounts[0] }
     );
     ICOInstance= await ICO.deployed();

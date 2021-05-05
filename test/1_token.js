@@ -7,7 +7,7 @@ const toWei = (x) => {
     return web3.utils.toWei(x.toString());
 }
 
-contract("Token testing", (accounts) => {
+contract("Token", (accounts) => {
     before( async() => {
         tokenInstance = await QuillToken.deployed();
         ICOInstance = await ICO.deployed();

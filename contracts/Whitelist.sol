@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Whitelist is Ownable
 {
-    mapping(address=>bool) public whitelisted;
+    mapping(address => bool) public whitelisted;
 
 
     event AddedToWhitelist(address indexed _recipient);

@@ -25,13 +25,16 @@ contract Pausable is Ownable
     event Unpaused(uint256 timestamp);
 
     bool private _paused;
+
+    address private pauser; // Address of the beneficiary
     
     /**
      * @dev Initializes the contract in unpaused state. Assigns the Pauser role
      * to the deployer in this case, the ICO contract.
      */
-    constructor () internal {
+    constructor (address _pauser) internal {
         _paused = false;
+        pauser = _pauser;
     }
 
     /**
@@ -57,10 +60,16 @@ contract Pausable is Ownable
         _;
     }
 
+    // Checks if the caller of a function is the beneficiary or not
+    modifier onlyPauser() {
+        require(msg.sender == pauser, "Unauthorised access: Not the beneficiary");
+        _;
+    }
+
     /**
      * @dev Called by a pauser to pause, triggers stopped state.
      */
-    function pause() public onlyOwner whenNotPaused {
+    function pause() public onlyPauser whenNotPaused {
         _paused = true;
         emit Paused(block.timestamp);
     }
@@ -68,7 +77,7 @@ contract Pausable is Ownable
     /**
      * @dev Called by a pauser to unpause, returns to normal state.
      */
-    function unpause() public onlyOwner whenPaused {
+    function unpause() public onlyPauser whenPaused {
         _paused = false;
         emit Unpaused(block.timestamp);
     }
