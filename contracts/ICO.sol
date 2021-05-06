@@ -31,14 +31,6 @@ contract ICO is Pausable
     event Rebase(uint256 rate, Phase phase, uint256 timestamp);
     event Buy(address indexed investor, uint256 amount, uint256 bonus, uint256 timestamp);
     event EthReturned(address indexed investor, uint256 amount, uint256 timestamp);
-
-
-    // Redundant ?
-    modifier onlyBeneficiary() 
-    {
-        require(msg.sender == beneficiary, "Unauthorised access: Not the beneficiary");
-        _;
-    }
     
 
     constructor(
