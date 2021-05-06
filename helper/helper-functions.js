@@ -19,6 +19,24 @@ const fromUnix = (UNIX_timestamp) => {
     return time;
 };
 
+function make2(str) {
+    str = str.toString();
+    return str.length == 1 ? "0".concat(str) : str;
+};
+
+async function advanceTimeAndBlock(time) {
+    await advanceTime(time);
+    await advanceBlock();
+    return Promise.resolve(await web3.eth.getBlock("latest"));
+};
+
+function advanceBlock() {
+    return new Promise((resolve, reject) => {
+        web3.currentProvider.send({ jsonrpc: '2.0', method: 'evm_mine', id: new Date().getTime() },
+            (err, result) => { if (err) { return reject(err) } const newBlockHash = web3.eth.getBlock('latest').hash; return resolve(newBlockHash) })
+    })
+}
+
 function advanceTime(time) {
     return new Promise((resolve, reject) => {
         web3.currentProvider.send({ jsonrpc: '2.0', method: 'evm_increaseTime', params: [time], id: new Date().getTime() },
@@ -41,7 +59,8 @@ async function advanceTimeToThis(futureTime) {
 }
 
 module.exports = {
-    advanceTimeToThis,
-    toUnix, fromUnix, 
+    advanceTimeToThis, advanceTimeAndBlock,
+    advanceTime, advanceBlock,
+    toUnix, fromUnix, make2,
     fromWei, toWei
 }

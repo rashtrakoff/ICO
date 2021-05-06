@@ -3,7 +3,6 @@ const Whitelist = artifacts.require("Whitelist");
 const ICO = artifacts.require("ICO");
 
 module.exports = async function(deployer, network, accounts) {
-    
     /**
      * @dev Account roles
      * account[0] = admin
@@ -35,9 +34,10 @@ module.exports = async function(deployer, network, accounts) {
         tokenInstance.address, 
         whitelistInstance.address, 
         accounts[1], 
-        '10000000000000000', 
+        (3*Math.pow(10, 11)).toString(), 
         { from: accounts[0] }
     );
+
     ICOInstance= await ICO.deployed();
     await tokenInstance.distToICO(ICO.address, { from: accounts[0] });
 

@@ -3,9 +3,12 @@ const QuillToken = artifacts.require("QuillToken");
 const ICO = artifacts.require("ICO");
 const ERC20 = artifacts.require("IERC20");
 
-const toWei = (x) => {
-    return web3.utils.toWei(x.toString());
-}
+const {
+    advanceTimeToThis, advanceTimeAndBlock,
+    advanceTime, advanceBlock,
+    toUnix, fromUnix, make2,
+    fromWei, toWei
+} = require("../helper/helper-functions");
 
 contract("Token", (accounts) => {
     before( async() => {
