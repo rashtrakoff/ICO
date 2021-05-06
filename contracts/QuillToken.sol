@@ -7,8 +7,17 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract QuillToken is ERC20, Ownable
 {
     event TokenDeployed(address indexed admin, uint256 timestamp);
-    event ICOShareDistributed(address indexed ICOContract, uint256 timestamp);
 
+    event TokenGivenToICO(address indexed ICOContract, uint256 timestamp);
+
+    /**
+     * @dev Tokens are distributed to the respective wallets while deploying this contract
+     * @param _reserveWallet Wallet for the reserve
+     * @param _interestPayoutWallet Wallet for paying out interest
+     * @param _HRWallet Wallet of HR and team
+     * @param _generalFundWallet Wallet for general usage
+     * @param _bountiesWallet Wallet for bounties and airdrops 
+     */
     constructor(
         address _reserveWallet,
         address _interestPayoutWallet,
@@ -26,10 +35,13 @@ contract QuillToken is ERC20, Ownable
         emit TokenDeployed(msg.sender, block.timestamp);
     }
 
+    /**
+     * @dev Tokens distributed to the ICO smart contract upon deployment of the ICO contract
+     */
     function distToICO(address _ICOContract) external onlyOwner
     {
         _mint(_ICOContract, 12500000000 * 1e18);
 
-        emit ICOShareDistributed(_ICOContract, block.timestamp);
+        emit TokenGivenToICO(_ICOContract, block.timestamp);
     }
 }

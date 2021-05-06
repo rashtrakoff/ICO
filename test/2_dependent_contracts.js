@@ -17,10 +17,6 @@ contract("Whitelist and Pausable", (accounts) => {
         whitelistInstance = await Whitelist.deployed();
     });
 
-    it("Beneficiary should be correct", async() => {
-        expect(await ICOInstance.beneficiary.call()).to.be.equal(accounts[1]);
-    });
-
     it("Beneficiary should be able to pause the ICO without a special function", async() => {
         await ICOInstance.pause({ from: accounts[1] });
         expect(await ICOInstance.paused()).to.be.equal(true);
@@ -29,6 +25,11 @@ contract("Whitelist and Pausable", (accounts) => {
     it("Beneficiary should be able to unpause the ICO without a special function", async() => {
         await ICOInstance.unpause({ from: accounts[1] });
         expect(await ICOInstance.paused()).to.be.equal(false);
+    });
+
+    it("Beneficiary should be able to stop the ICO withouth a special function", async() => {
+        await ICOInstance.stop({ from: accounts[1] });
+        expect(await ICOInstance.stopped()).to.be.equal(true);
     });
 
     it("Admin should be able to whitelist addresses", async() => {
@@ -41,9 +42,13 @@ contract("Whitelist and Pausable", (accounts) => {
         expect(await whitelistInstance.whitelisted(accounts[8])).to.be.equal(false);
     });
 
-    it("Admin should be able to transfer ownership without a special function", async() => {
+    it("Admin should be able to transfer ownership of the whitelist without a special function", async() => {
         await whitelistInstance.transferOwnership(accounts[1], { from: accounts[0] });
         expect(await whitelistInstance.owner()).to.be.equal(accounts[1]);
     });
 
+    it("Admin should be able to transfer the ownership of ICO contract", async() => {
+        await ICOInstance.transferOwnership(accounts[1], { from: accounts[0] });
+        expect(await ICOInstance.owner()).to.be.equal(accounts[1]);
+    });
 });

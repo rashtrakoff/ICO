@@ -1,8 +1,8 @@
 {
   "scripts": {
-    "test": "truffle test --debug --network development",
-    "ganache": "ganache-cli --accounts 50>/dev/null",
-    "fork": "ganache-cli --accounts 50 -f"
+    "test": "truffle test --debug -v -b --network development",
+    "ganache": "ganache-cli --accounts 20>/dev/null",
+    "fork": "ganache-cli --accounts 20 -f {ALCHEMY_URL}>/dev/null"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.1.7",

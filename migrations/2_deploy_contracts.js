@@ -34,7 +34,7 @@ module.exports = async function(deployer, network, accounts) {
         tokenInstance.address, 
         whitelistInstance.address, 
         accounts[1], 
-        (3*Math.pow(10, 11)).toString(), 
+        "0x9326BFA02ADD2366b30bacB125260Af641031331",
         { from: accounts[0] }
     );
 
