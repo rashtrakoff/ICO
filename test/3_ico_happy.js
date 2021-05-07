@@ -55,7 +55,7 @@ contract("ICO Happy Path", (accounts) => {
         expect((await newTokenInstance.balanceOf(accounts[7])).toString()).to.be.equal((tokenAmount.add(bonusAmount)).toString());    
     });
 
-    // This test will fail to run if run on mainnet forking mode
+    // This test will fail to run if run on mainnet forking mode as the rate of ETH/USD will be too low
     it.skip("User should be able to buy all the tokens with some eth left", async() => {
         // Given that ETH-USD Rate == $10**8, ETH spent == 0.125
         await advanceTimeToThis("07/15/2021 00:00:00");

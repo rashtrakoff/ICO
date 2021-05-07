@@ -11,7 +11,7 @@ import "./Pausable.sol";
 /**
  * @title ICO contract
  * @author Chinmay Sai Vemuri
- * @notice This contract will only run in testnet (kovan) forking mode 
+ * @notice This contract will only run in testnet (kovan) fork mode 
  */
 contract ICO is Pausable {
     using SafeMath for *;
@@ -98,15 +98,13 @@ contract ICO is Pausable {
         address _tokenAddress,
         address _whitelistAddress,
         address payable _beneficiary,
-        address _pricefeed // Disable this during deployment to testnet
-        // uint256 _baseEthUSDRate // Enable this when deploying to the testnet and set the rate according to your wish
+        address _pricefeed
     ) public Pausable(_beneficiary) {
         whitelist = Whitelist(_whitelistAddress);
         token = QuillToken(_tokenAddress);
         beneficiary = _beneficiary;
-        ethUSDPricefeedAddress = _pricefeed; //Disable this during local testing
+        ethUSDPricefeedAddress = _pricefeed; 
         ethUSDRate = priceFeedData(_pricefeed);
-        // ethUSDRate = _baseEthUSDRate; // Enable during local testing
 
         emit ICOInitialized(_beneficiary, block.timestamp);
     }
@@ -130,7 +128,6 @@ contract ICO is Pausable {
             "ICO event ended/inactive"
         );
 
-        ///@dev Disable this during local testing
         ethUSDRate = priceFeedData(ethUSDPricefeedAddress); 
 
         require(
@@ -228,7 +225,7 @@ contract ICO is Pausable {
         return uint256(price);
     }
 
-    // @dev Function only for testing locally
+    /// @dev Function only for testing purpose
     function rebase(uint256 _value) external onlyOwner {
         ethUSDRate = _value;
     }
